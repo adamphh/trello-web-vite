@@ -1,0 +1,17 @@
+1. Vite, create-react-app, Nextjs dùng cái nào?
+- create-react-app:
+  + Đã không được update từ lâu
+  + Khởi tạo server chậm, sử dụng webpack
+- Vite: 
+  + Ra đời sau
+  + Khởi chạy server nhanh 
+  + Support nhiều thư viện chứ ko chỉ có reactjs
+
+P/s: create-react-app, Vite là build tool, khi sử dụng thì nó sẽ build cho chúng ta một ứng dụng cơ bản nhất,
+gần như không có cấu trúc sẵn và phải tự xây dụng cấu trúc thư mục, router,...
+
+- Nextjs:
+  + Là một framework
+  + Khi dùng thì nó sẽ sinh ra một ứng dụng có cấu trúc dự án theo quy trình rồi. 
+  Và phải học cách để làm theo quy trình đó. Phù hợp với các ứng dụng lớn.
+  + Nên học sau khi dùng Vite.

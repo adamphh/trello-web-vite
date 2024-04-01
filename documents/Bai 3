@@ -1,0 +1,10 @@
+1. Reference: 
+https://www.youtube.com/watch?v=pXJb6ehTV0o&list=PLP6tw4Zpj-RJP2-YrhtkWqObMQ-AA4TDy&index=10
+
+- https://vitejs.dev/guide/
+
+2. Khoi tao vite project
+- dung npm:
+    npm create vite@latest
+- dung yarn: (nen dung yarn vi khoi tao server nhanh hon)
+    yarn create vite
