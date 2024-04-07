@@ -1,0 +1,42 @@
+1. git add .
+    Them cac file thay doi
+2. Git commit -m 'message'
+    commit nhung file thay doi
+3. Git commit -amend 
+    add them file thay doi vao commit truoc do. Tranh phai commit nhieu lan => rac commit
+4. Git rebase {branch_name}
+    lay code tu nhanh branch_name ve nhanh hien tai
+    Tuong tu nhu git merge nhung se giu nguyen commit message theo thu tu thoi gian
+5. git log
+    - git reflog: hien thi full log
+    - git log --oneline: hien thi dang ngan, don gian
+
+6. git cherry-pick
+Tinh huong: 
+    Team da lam xong cac task tu 1 den 10, va merge vao master de chuan bi deploy len production. 
+    Tuy nhien khach hang lai muon tam thoi bo di 3 tinh nang (VD: task 03, task 05, task 06), chi deploy 7 tinh nang len thoi.
+    TH nay su dung cherry pick
+
+- Buoc 1: chuyen ve nhanh master (git checkout master)
+- Buoc 2: git log --oneline --no-merges de hien thi danh sach cac commit cua cac tinh nang (commit id)
+- Buoc 3: tao 1 branch moi de deploy production va checkout den commit truoc task muon bo di (task 02, truoc task 03)
+    git checkout -b deploy_production_2024_04_07 {commit_id_task_02}
+- Buoc 4: lay code o task 04 (bo task 03)
+    git cherry-pick {commit_id_task_04}
+    git log  --oneline => thay log cua task 01, task 02, task 04 (khong co cua task 03)
+- Buoc 5: lay code cua cac task con lai (nhieu task)
+    git cherry-pick {commit_id_task_07} {commit_id_task_08} {commit_id_task_09} {commit_id_task_10}
+
+    P/s: co the cherry-pick tung commit tuong tu buoc 4.
+
+    Den buoc nay se co 2 nhanh: git branch
+        - master: chua toan bo code cua 10 task
+        - deploy_production_2024_04_07: chi chua source code cua 7 task 
+        git log --oneline
+
+    => Khong can xoa code hay revert code cua nhanh master.
+- Buoc 6: push code len nhanh deploy_production_2024_04_07 tren git de deploy to production
+
+*** Advanced: 
+    git cherry-pick --abort: bo qua cai lenh cherry-pick vua thuc hien
+    
