@@ -1,0 +1,25 @@
+1. Reference:
+    https://react.dev/learn/writing-markup-with-jsx
+2. JSX
+    - dung de mo rong cu phap cua javascript, no cho phep viet ma HTML ben trong file javascript.
+    - Truoc day cac nha lap trinh web co gang tach phan noi dung (ma html, css) va phan xu ly logic (javascript) ra cac file khac nhau (VD: html, css, js...). Tuy nhien web ngay cang can tuong tac nhieu hon, logic quyet dinh noi dung nao duoc hien thi, noi dung nao khong => 
+    Can ket hop logic va html trong cung 1 noi (component)
+    - P/s: JSX va React la 2 thu khac nhau, chung thuong duoc dung cung nhau nhung hoan toan co the dung chung doc lap. jsx la phan cu phap mo rong cua js, react la mot thu vien.
+
+3. Converting HTML to JSX 
+3.1 JSX Rules
+    - Luon tra ve mot root element: luon phai boc content cua component trong 1 the cha (co the dung the div hoac the fragment hoac the trong <>{content}</>)
+    - Close all the tags: tat ca cac tags deu can the dong ke ca li, img
+    - camelCase: de phan biet voi cac keyword trong javascript thi cac thuoc tinh html trong jsx su dung dang camelCase (VD: className, onKeyDown, ...) 
+
+3.2 Use a JSX Converter
+    - Su dung tool https://transform.tools/html-to-jsx de convert mot trang html to jsx 
+
+4. JavaScript in JSX with Curly Braces
+    - Trong mot so TH muon su dung javascript logic trong component (trong ma jsx) thi co the viet trong cap the Curly Braces { ma javascript }
+        VD: <img src={avatar} alt={description} />
+        avatar, description la bien javascript
+        let avatar = 'avatar.jpg',
+        description = 'test description content';
+    - Neu muon truyen text vao thi dat trong dau nhay don, hoac nhay kep
+        VD: <img src={'avatar.jpg'} alt={'test description content'} />
