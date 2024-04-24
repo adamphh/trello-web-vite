@@ -25,3 +25,43 @@
 3. Usage
     - khai báo font-family: "Roboto", sans-serif; để chuẩn  hóa font cho dự án
     - Xem thêm cách dùng các element trong mui.com/get-started 
+
+----------------------------------------------------------------
+Bai 9: Cách Import chuẩn các Component của MUI để tối ưu dự án | ReactJS + Material UI
+https://mui.com/material-ui/guides/minimizing-bundle-size/
+1. Có 2 cách import các component của MUI
+    - Cách 1: 
+        import { Button, TextField } from '@mui/material';
+
+    - Cách 2: (khuyến cáo nên dùng cách này => nhanh hơn gấp 6 lần cách 1 khi start server)
+        import Button from '@mui/material/Button';
+        import TextField from '@mui/material/TextField';
+
+2. Chỉ nên import những component đến cấp 2, không nên import đến cấp 3
+VD: 
+// ✅ OK
+import { Add as AddIcon } from '@mui/icons-material';
+import { Tabs } from '@mui/material';
+//                         ^^^^^^^^ 1st or top-level
+
+// ✅ OK
+import AddIcon from '@mui/icons-material/Add';
+import Tabs from '@mui/material/Tabs';
+//                              ^^^^ 2nd level
+
+// ❌ NOT OK
+import TabIndicator from '@mui/material/Tabs/TabIndicator';
+//                                           ^^^^^^^^^^^^ 3rd level
+
+- Để tránh TH import các component ở mức thứ 3 thì sử dụng plugin của eslint để check
+Mở file .eslintrc.cjs và thêm đoạn code sau vào phần rules
+{
+  "rules": {
+    "no-restricted-imports": [
+      "error",
+      {
+        "patterns": ["@mui/*/*/*"]
+      }
+    ]
+  }
+}
