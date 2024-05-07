@@ -1,0 +1,79 @@
+1. Reference
+    https://mui.com/material-ui/customization/theming/
+
+2. Theme trong material ui là một công cụ do material ui cung cấp giúp cho các thành phần trong ứng dụng có một sự nhất quán với nhau. 
+VD: Màu chữ của title thì luôn là màu xanh, cỡ 12px. 
+chứ không có kiểu title chỗ này là màu xanh, chỗ kia màu đỏ.
+
+3. Khi cài material ui thì nó đã có 1 theme mặc định rồi. 
+
+4. Ngoài ra có thể custom theme mặc định của material ui, sử dụng Theme provider
+
+5. Cấu hình theme
+https://github.com/mui/material-ui/blob/next/examples/material-ui-vite/src/theme.js
+https://mui.com/material-ui/getting-started/example-projects/
+
+5.1 tạo file src/theme.js và thêm code 
+    import { createTheme } from '@mui/material/styles';
+import { red } from '@mui/material/colors';
+
+// Create a theme instance.
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#556cd6',
+    },
+    secondary: {
+      main: '#19857b',
+    },
+    error: {
+      main: red.A400,
+    },
+  },
+});
+
+export default theme;
+
+5.2 Mở file src/main.jsx và thêm code
+
+- import ThemeProvider, theme vào project
+    import { ThemeProvider } from '@mui/material/styles';
+    import theme from './theme';
+
+- Bọc các component vào trong ThemeProvider
+root.render(
+  <React.StrictMode>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <App />
+    </ThemeProvider>
+    ,
+  </React.StrictMode>,
+);
+
+6. Customize default theme
+https://mui.com/material-ui/customization/default-theme/
+
+- Tất cả các giá trị mặc định của theme sẽ được liệt kê ở link trên. TH không khai báo gì trong file src/theme.js thì sẽ dụng những giá trị mặc định này
+
+- TH muốn thay đổi giá trị nào đó trong theme thì cần khai báo trong file src/theme.js
+VD: 
+    màu mặc định của text.secondary: rgab(0, 0, 0, 0.6)
+    giờ muốn đổi sang màu đen #000000 thì khai báo trong file src/theme.js
+    palette: {
+        text: {
+            secondary: {
+                color: '#000000'
+            }
+        }
+    }
+    sử dụng: text.secondary
+    <Typography color="text.secondary">test customize theme </Typography>
+
+P/s: light mode/ dark mode
+    Trong theme cũng cung cấp sẵn 2 mode là light mode (default) và dark mode
+    palette: {
+        mode: 'dark'
+    }
+
+    
