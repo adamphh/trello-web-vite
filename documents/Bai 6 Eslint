@@ -1,1 +1,18 @@
- 
+ 1. Install eslint
+ yarn add --dev eslint
+
+2. run ESLint on any file or directory
+  yarn run eslint yourfile.js
+  or: 
+  yarn lint (check chuẩn code toàn bộ probject - xem trong file package.json)
+
+3. Cài thêm extension eslint trên visual studio code để hiển thị thông báo lỗi ngay khi code
+
+4. Khai báo các rules trong file .eslintrc.cjs để tất cả nhóm cần phải tuần theo
+- xem các rule trong: https://eslint.org/docs/latest/use/getting-started
+hoặc lấy ở đây: 
+https://github.com/trungquandev/trungquandev-public-utilities-algorithms/blob/main/02-sample-eslint-config-for-react-project/.eslintrc.cjs
+
+5. .eslintignore
+TH muốn eslint bỏ qua (không check chuẩn code) ở một số file thì tạo file .eslintignore trong project 
+và thêm các file muốn bỏ qua vào
