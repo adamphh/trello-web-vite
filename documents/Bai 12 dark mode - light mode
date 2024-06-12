@@ -1,0 +1,52 @@
+1. references
+https://mui.com/material-ui/customization/dark-mode/
+
+2. Toggling color mode
+
+3. vấn đề Dark theme flash on SSR (server side rendering)
+Liên quan issue #27651 trên github của material-ui. https://github.com/mui/material-ui/issues/27651
+
+Khi bật dark mode lên sau đó refresh trang (F5) thì trang sẽ bật light mode trước sau đó mới chuyển sang dark mode (nhấp nháy).
+
+- Vấn đề này sẽ được giải quyết ở issue #32049 https://github.com/mui/material-ui/issues/32049. Material-ui sẽ thêm experimental-api (https://mui.com/material-ui/experimental-api/classname-generator/) để xử lý.
+
+*** Thay vì dùng createTheme và ThêmProvider như ở bài 11
+const theme = createTheme({ palette: { mode: userSelectedMode } });
+<ThemeProvider theme={theme}>
+
+thì sẽ thay bằng extendTheme và CssVarsProvider như sau:
+const theme = extendTheme({
+  colorSchemes: {
+    light: { palette: { ... } },
+    dark: { palette: { ... } },
+  }
+});
+
+<CssVarsProvider theme={theme}>
+
+4. Remove the toggle mode logic
+- Lưu lại giá trị của mode trong local storage
+You can remove your existing logic that handles the user-selected mode and replace it with the useColorScheme hook. (xem trong file app.jsx)
+
+import { useColorScheme } from '@mui/material/styles'
+
+function ModeToggle() {
+  const { mode, setMode } = useColorScheme()
+  return (
+    <Button
+      onClick={() => {
+        setMode(mode === 'light' ? 'dark' : 'light')
+      }}
+    >
+      {mode === 'light' ? 'Turn dark' : 'Turn light'}
+    </Button>
+  )
+}
+
+5. Prevent dark-mode flickering in server-side applications
+The getInitColorSchemeScript() API prevents dark-mode flickering by returning a script that must be run before React.
+a. Next.js Pages Router
+
+b. Gatsby
+
+6. Refactor custom styles to use the attribute selector
