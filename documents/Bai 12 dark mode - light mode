@@ -50,3 +50,23 @@ a. Next.js Pages Router
 b. Gatsby
 
 6. Refactor custom styles to use the attribute selector
+
+***************************
+7. System preference: Sync Dark Mode and Light Mode with the System Settings
+https://mui.com/material-ui/customization/dark-mode/
+- default: sử dụng ThemeProvider thì cần dùng hook useMediaQuery để lấy giá trị setting dark mode, light mode của trình duyệt (system)
+const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+
+Sau đó kiểm tra để set lại dark mode, light mode
+const theme = React.useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode: prefersDarkMode ? 'dark' : 'light',
+        },
+      }),
+    [prefersDarkMode],
+  );
+
+- Nếu sử dụng CssVarsProvider thì có sẵn hook useColorScheme
+const { mode, setMode } = useColorScheme()

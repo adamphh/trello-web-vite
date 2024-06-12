@@ -15,6 +15,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   //   </ThemeProvider>
   // </React.StrictMode>
 
+
+  // Nếu để React.StrictMode thì khi chạy trên môi trường dev sẽ bị gọi 2 lần: console.log, api cũng bị gọi 2 lần
+  // => đơn giản nhất là dùng <>
   <React.StrictMode>
     <CssVarsProvider theme={theme}>
       <CssBaseline />
