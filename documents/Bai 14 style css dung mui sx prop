@@ -1,0 +1,167 @@
+1. Spacing (gap 1, gap 2)
+https://mui.com/material-ui/customization/spacing/
+- Material UI đề xuất 1 hệ số tỉ lệ 8px cho scaling factor. Tức là mỗi gap tương đương với 1 đơn vị là 8px. (spacing: 8px)
+VD: gap: 1 (tương đương khoảng cách 8px)
+gap: 2 (tương đương khoảng cách 16px)
+
+<Box sx={{ gap: 1 }}>{Test}</Box>
+Tức là khoảng cách là 8px;
+
+a. Custom spacing
+    Nếu muốn thay đổi đơn vị (không còn là 8px nữa mà là 10px) thì cần khai báo trong file theme.jsx
+
+    + Một số: (Number)
+        const theme = createTheme({
+            spacing: 4,   // Khai báo lại spacing: 4px thay vì 8px như default của material UI
+        });
+
+        theme.spacing(2); // `${4 * 2}px` = '8px'
+        Khai báo gap: 2 => '8px'
+
+    + Hoặc khai báo là 1 function
+        const theme = createTheme({
+            spacing: (factor) => `${0.25 * factor}rem`, // (Bootstrap strategy)
+        });
+
+        theme.spacing(2); // = 0.25 * 2rem = 0.5rem = 8px
+        Khai báo gap: 2 => '8px'
+
+    + Một mảng
+        const theme = createTheme({
+            spacing: [0, 4, 8, 16, 32, 64],
+        });
+
+        theme.spacing(2); // = '8px'
+        Khai báo gap: 3 => '16px'
+        Khai báo gap: 1 => '4px'
+
+2. Sự khác nhau giữa style inline và sx prop của material UI
+<Box sx={{ height:'50px', width:'25px' }}/>
+<div style={{ height:'50px', width:'25px' }}/>
+- Khi dùng style inline thì nó sẽ style trực tiếp vào thẻ html luôn => render nhanh hon
+- Khi dùng sx prop của material ui: 
+    + thì đầu tiên materital UI sẽ generate ra 1 thẻ div (với id) để hiển thị cho component Box ở trên
+    Sau đó nó sẽ chèn thêm thẻ style vào bên trên để css cho id của thẻ div của component Box
+https://stackoverflow.com/questions/72527461/when-should-i-use-style-instead-of-sx-prop-in-material-ui
+https://stackoverflow.com/questions/71014390/what-is-the-purpose-of-sx-prop-in-material-ui
+    + Có thể customize style nhanh. Có thể truy cập trực tiếp vào theme để lấy giá trị
+        theme.breakpoints.down('xl')
+    + sử dụng shorthand khi code
+
+    + https://mui.com/system/styles/basics/
+    
+3. styled 
+- styled: là api của material ui, nó khác với style css để viết css inline.
+- Dùng để tạo kiểu (style) cho một component. Tất cả các Material UI components thì đều sử dụng styled để style.
+synctax: styled(Component, [options])(styles) => Component 
+
+VD: style cho một thẻ div trong một component.
+import { styled } from '@mui/system';
+
+const MyDivComponent = styled('div')({
+  color: 'darkslategray',
+  backgroundColor: 'aliceblue',
+  padding: 8,
+  borderRadius: 4,
+});
+
+export default function BasicUsage() {
+  return <MyDivComponent>Styled div</MyDivComponent>;
+}
+
+4. Khi nào sử dụng sx props, styled api và themeOverride?
+- Sử dụng sx props: trong TH viết css một lần, không dùng lại và cần customize css nhanh cho cái BOX 
+- styled api: Tạo ra một styled component sử dụng styled api nếu như cần nhiều compoennt với cùng một kiểu style có chung styling. 
+vd: nếu muốn customize css cho thẻ a và dùng ở một vài nơi => tạo ra 1 component cho thẻ a sử dụng styled api
+- themeOverride: dùng themeOverride nếu muốn tất cả các component cùng kiểu trong project có cùng styling.
+vd: tất cả thẻ a trong project có chung style => dùng themeOverride
+
+5. Custom CSS trong Material UI
+https://mui.com/material-ui/customization/how-to-customize/
+a. One-off customization
+- The sx props: 
+<Slider defaultValue={30}
+  sx={{
+    width: 300,
+    color: 'success.main',
+  }}
+/>
+- Overriding nested component styles
+<Slider defaultValue={30}
+  sx={{
+    width: 300,
+    color: 'success.main',
+    // nested component styles usung & symbol
+    '& .MuiSlider-thumb': {
+      borderRadius: '1px',
+    },
+  }}
+/>
+- Overriding styles with class names
+you can use the className prop, available on each component
+
+- State classes
+
+b. Reusable component (create a new component using styled api)
+const SuccessSlider = styled(Slider)(({ theme }) => ({
+  width: 300,
+  color: theme.palette.success.main,
+  }));
+
+  export default function StyledCustomization() {
+  return <SuccessSlider defaultValue={30} />;
+}
+- Dynamic overrides
+interface StyledSliderProps extends SliderProps {
+  success?: boolean;
+}
+
+const StyledSlider = styled(Slider, {
+  shouldForwardProp: (prop) => prop !== 'success',
+})<StyledSliderProps>(({ success, theme }) => ({
+  ...(success &&
+    {
+      // the overrides added when the new prop is used
+    }),
+}));
+
+- CSS variables
+const successVars = {
+  '--color': '#4caf50',
+  '--box-shadow': 'rgb(76, 175, 80, .16)',
+};
+
+const defaultVars = {
+  '--color': '#1976d2',
+  '--box-shadow': 'rgb(25, 118, 210, .16)',
+};
+
+<React.Fragment>
+  <FormControlLabel
+    control={
+      <Switch
+        checked={vars === successVars}
+        onChange={handleChange}
+        color="primary"
+        value="dynamic-class-name"
+      />
+    }
+    label="Success"
+  />
+  <CustomSlider style={vars} defaultValue={30} sx={{ mt: 1 }} />
+</React.Fragment>
+
+c. Global theme overrides using themeOverride
+https://mui.com/material-ui/customization/theme-components/
+
+d. Global CSS override
+import GlobalStyles from '@mui/material/GlobalStyles';
+
+export default function GlobalCssOverride() {
+  return (
+    <React.Fragment>
+      <GlobalStyles styles={{ h1: { color: 'grey' } }} />
+      <h1>Grey h1 element</h1>
+    </React.Fragment>
+  );
+}
