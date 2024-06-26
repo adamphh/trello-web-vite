@@ -1,11 +1,4 @@
-import Button from '@mui/material/Button'
-import AccessAlarmIcon from '@mui/icons-material/AccessAlarm'
-import ThreeDRotation from '@mui/icons-material/ThreeDRotation'
-import HomeIcon from '@mui/icons-material/Home'
-import { pink } from '@mui/material/colors'
-import Typography from '@mui/material/Typography'
 import { useColorScheme } from '@mui/material/styles'
-// import useMediaQuery from '@mui/material/useMediaQuery'
 import Select from '@mui/material/Select'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
@@ -14,6 +7,8 @@ import LightModeIcon from '@mui/icons-material/LightMode'
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined'
 import SettingsBrightnessIcon from '@mui/icons-material/SettingsBrightness'
 import Box from '@mui/material/Box'
+import Container from '@mui/material/Container'
+
 
 function ModeSelect() {
   const { mode, setMode } = useColorScheme()
@@ -21,7 +16,6 @@ function ModeSelect() {
   const handleChange = (event) => {
     let selectedMode = event.target.value
     setMode(selectedMode)
-    // setAge(event.target.value);
   }
 
   return (
@@ -54,55 +48,47 @@ function ModeSelect() {
         </MenuItem>
       </Select>
     </FormControl>
-  );
-}
-
-function ModeToggle() {
-  const { mode, setMode } = useColorScheme()
-
-  // const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
-  // const prefersLightMode = useMediaQuery('(prefers-color-scheme: light)')
-  // console.log('prefersDarkMode: ', prefersDarkMode)
-  // console.log('prefersLightMode: ', prefersLightMode)
-
-  return (
-    <Button
-      onClick={() => {
-        setMode(mode === 'light' ? 'dark' : 'light')
-      }}
-    >
-      {mode === 'light' ? 'Turn dark' : 'Turn light'}
-    </Button>
   )
 }
 
+
 function App() {
   return (
-    <>
-      <ModeSelect />
-      <hr />
-      <ModeToggle />
-      <hr />
-      <div>Using material ui</div>
-      <Typography variant="body2" color="text.secondary">
-        Test customizations themes and Typography
-      </Typography>
-
-      <h3>Basic button</h3>
-      <Button variant="text">Text</Button>
-      <Button variant="contained">Contained</Button>
-      <Button variant="outlined">Outlined</Button>
-      <br />
-      <AccessAlarmIcon />
-      <ThreeDRotation />
-      <HomeIcon />
-      <HomeIcon color="primary" />
-      <HomeIcon color="secondary" />
-      <HomeIcon color="success" />
-      <HomeIcon color="action" />
-      <HomeIcon color="disabled" />
-      <HomeIcon sx={{ color: pink[100] }} />
-    </>
+    /** - primary.main se lay gia tri tu ben them (light: teal, dark: cyan)
+     *  - can them disableGutters maxWidth={false} de fix phan hien thi bi trang o 2 ben man hinh
+    */
+    <Container disableGutters maxWidth={false} sx={{ height: '100vh', backgroundColor: 'primary.main' }}>
+      {/* app bar box */}
+      <Box sx={{
+        backgroundColor: 'primary.light',
+        width: '100%',
+        height: (theme) => theme.trelloCustom.appBarHeight,
+        display: 'flex',
+        alignItems: 'center'
+      }}>
+        <ModeSelect />
+      </Box>
+      {/* board bar box */}
+      <Box sx={{
+        backgroundColor: 'primary.dark',
+        width: '100%',
+        height: (theme) => theme.trelloCustom.boardBarHeight,
+        display: 'flex',
+        alignItems: 'center'
+      }}>
+        Board bar
+      </Box>
+      <Box sx={{
+        backgroundColor: 'primary.main',
+        width: '100%',
+        // Su dung string literal de dua bien vao
+        height: (theme) => `calc(100vh - ${theme.trelloCustom.appBarHeight} - ${theme.trelloCustom.appBarHeight})`,
+        display: 'flex',
+        alignItems: 'center'
+      }}>
+        Board content
+      </Box>
+    </Container >
   )
 }
 
